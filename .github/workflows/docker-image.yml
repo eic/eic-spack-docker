@@ -37,7 +37,7 @@ jobs:
       with:
         context: .
         file: ${{ matrix.os }}/Dockerfile
-        tags: electronioncollider/spack-builder:${{ matrix.os }}-test
+        tags: electronioncollider/spack-builder:${{ matrix.os }}
         push: true
     -
       name: Image digest
