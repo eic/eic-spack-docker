@@ -31,7 +31,7 @@ RUN source /spack/share/spack/setup-env.sh \
 RUN sed -i 's|install_tree: .*|install_tree: /cvmfs/eic.opensciencegrid.org/packages|' /spack/etc/spack/defaults/config.yaml
 RUN sed -i 's|install_path_scheme: .*|install_path_scheme: "\${PACKAGE}/\${VERSION}/\${ARCHITECTURE}-\${COMPILERNAME}-\${COMPILERVER}-\${HASH}"|' /spack/etc/spack/defaults/config.yaml
 RUN sed -i 's|  all:|  all:\n    target: [x86_64]|' /spack/etc/spack/defaults/packages.yaml
-RUN echo "upstreams:\n  spack-instance-1:\n    install_tree: /cvmfs/eic.opensciencegrid.org/packages > /spack/etc/spack/defaults/upstreams.yaml
+RUN echo "upstreams:\n  spack-instance-1:\n    install_tree: /cvmfs/eic.opensciencegrid.org/packages" > /spack/etc/spack/defaults/upstreams.yaml
 
 # Install EIC spack
 RUN git clone https://github.com/eic/eic-spack.git /spack/var/spack/repos/eic-spack
