@@ -43,6 +43,7 @@ RUN mkdir /spack/mirror && chmod a+w /spack/mirror
 RUN source /spack/share/spack/setup-env.sh && spack mirror add --scope defaults local file:///spack/mirror
 
 # Setup /cvmfs permissions
+RUN chmod -R a+w /spack
 RUN chmod -R a+w /cvmfs/eic.opensciencegrid.org/packages
 
 # Tini
