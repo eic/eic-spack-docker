@@ -1,0 +1,17 @@
+FROM ubuntu:%tag%
+
+# Install build essentials
+RUN apt-get update -q \
+ && apt-get install -q -y \
+        bzip2 \
+        curl \
+        build-essential \
+        gfortran \
+        git \
+        gnupg2 \
+        patch \
+        python-dev \
+        rsync \
+        unzip \
+ && apt-get clean -q -y
+

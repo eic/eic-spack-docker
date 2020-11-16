@@ -1,14 +1,14 @@
-# This contains the spack-builder docker container recipe for ubuntu20.10.
+# This contains the spack-builder docker container recipe for ubuntu19.04.
 #
 # This container can be built (from the top level directory of this repository) with:
-#     docker build -t electronioncollider/spack-builder:ubuntu20.10 . --file ubuntu20.10/Dockerfile
+#     docker build -t electronioncollider/spack-builder:ubuntu19.04 . --file ubuntu19.04/Dockerfile
 # This container is built automatically based on the main branch of the repository,
-# and made available as docker://electronioncollider/spack-builder:ubuntu20.10
+# and made available as docker://electronioncollider/spack-builder:ubuntu19.04
 #
 # After building the container locally, you can also test it with singularity as follows:
-#     singularity run docker-daemon://electronioncollider/spack-builder:ubuntu20.10 /bin/bash
+#     singularity run docker-daemon://electronioncollider/spack-builder:ubuntu19.04 /bin/bash
 #
-FROM ubuntu:20.10
+FROM ubuntu:19.04
 
 # Install build essentials
 RUN apt-get update -q \

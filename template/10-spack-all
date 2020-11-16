@@ -1,30 +1,3 @@
-# This contains the spack-builder docker container recipe for ubuntu20.10.
-#
-# This container can be built (from the top level directory of this repository) with:
-#     docker build -t electronioncollider/spack-builder:ubuntu20.10 . --file ubuntu20.10/Dockerfile
-# This container is built automatically based on the main branch of the repository,
-# and made available as docker://electronioncollider/spack-builder:ubuntu20.10
-#
-# After building the container locally, you can also test it with singularity as follows:
-#     singularity run docker-daemon://electronioncollider/spack-builder:ubuntu20.10 /bin/bash
-#
-FROM ubuntu:20.10
-
-# Install build essentials
-RUN apt-get update -q \
- && apt-get install -q -y \
-        bzip2 \
-        curl \
-        build-essential \
-        gfortran \
-        git \
-        gnupg2 \
-        patch \
-        python-dev \
-        rsync \
-        unzip \
- && apt-get clean -q -y
-
 # Install spack
 ENV SPACK_ROOT /cvmfs/eic.opensciencegrid.org/packages/spack/current
 ENV SPACK_VERSION v0.15

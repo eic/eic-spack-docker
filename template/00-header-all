@@ -1,0 +1,10 @@
+# This contains the spack-builder docker container recipe for %os%%tag%.
+#
+# This container can be built (from the top level directory of this repository) with:
+#     docker build -t electronioncollider/spack-builder:%os%%tag% . --file %os%%tag%/Dockerfile
+# This container is built automatically based on the main branch of the repository,
+# and made available as docker://electronioncollider/spack-builder:%os%%tag%
+#
+# After building the container locally, you can also test it with singularity as follows:
+#     singularity run docker-daemon://electronioncollider/spack-builder:%os%%tag% /bin/bash
+#
