@@ -7,7 +7,7 @@ on:
     branches-ignore: [ main ]
 
 jobs:
-  push_to_registry:
+  build_only:
     strategy:
       matrix:
         os: [centos7,centos8,ubuntu18.04,ubuntu19.10,ubuntu20.04,ubuntu20.10]
