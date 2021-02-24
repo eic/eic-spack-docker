@@ -15,7 +15,7 @@ RUN yum install -q -y file git make automake cmake gcc gcc-c++ gcc-gfortran unzi
 
 # Install spack
 ENV SPACK_ROOT /cvmfs/eic.opensciencegrid.org/packages/spack/current
-ENV SPACK_VERSION v0.15
+ENV SPACK_VERSION v0.16
 RUN mkdir -p ${SPACK_ROOT}
 RUN git clone --depth 1 --branch releases/${SPACK_VERSION} https://github.com/spack/spack.git ${SPACK_ROOT} \
  && chmod a+w ${SPACK_ROOT}/var/spack ${SPACK_ROOT}/share/spack
