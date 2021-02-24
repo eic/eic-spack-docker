@@ -1,3 +1,13 @@
+# This contains the spack-builder docker container recipe for ubuntu20.04.
+#
+# This container can be built (from the top level directory of this repository) with:
+#     docker build -t electronioncollider/spack-builder:ubuntu20.04 . --file ubuntu20.04/Dockerfile
+# This container is built automatically based on the main branch of the repository,
+# and made available as docker://electronioncollider/spack-builder:ubuntu20.04
+#
+# After building the container locally, you can also test it with singularity as follows:
+#     singularity run docker-daemon://electronioncollider/spack-builder:ubuntu20.04 /bin/bash
+#
 FROM ubuntu:20.04
 
 # Install build essentials
@@ -6,7 +16,7 @@ RUN apt-get update -q \
         bzip2 \
         curl \
         build-essential \
-        gfortran \  
+        gfortran \
         git \
         gnupg2 \
         patch \
@@ -16,40 +26,37 @@ RUN apt-get update -q \
  && apt-get clean -q -y
 
 # Install spack
-ENV SPACK_VERSION v0.15
-RUN git clone --branch releases/${SPACK_VERSION} https://github.com/spack/spack.git /spack
+ENV SPACK_ROOT /cvmfs/eic.opensciencegrid.org/packages/spack/current
+ENV SPACK_VERSION v0.16
+RUN mkdir -p ${SPACK_ROOT}
+RUN git clone --depth 1 --branch releases/${SPACK_VERSION} https://github.com/spack/spack.git ${SPACK_ROOT} \
+ && chmod a+w ${SPACK_ROOT}/var/spack ${SPACK_ROOT}/share/spack
 
 # Work in /spack
-WORKDIR /spack
+WORKDIR ${SPACK_ROOT}
 
 # Switch to using bash instead of sh
 SHELL ["/bin/bash", "-c"]
 
 # Print arch
-RUN source /spack/share/spack/setup-env.sh && spack arch
+RUN source ${SPACK_ROOT}/share/spack/setup-env.sh \
+ && spack arch
 # Find compilers
-RUN source /spack/share/spack/setup-env.sh \
- && spack compiler find --scope defaults \
- && cat /spack/etc/spack/defaults/compilers.yaml
-# Add GPG key
-RUN source /spack/share/spack/setup-env.sh \
- && spack gpg init \
- && spack gpg create 'EIC Spack Build System' 'eic-spack@github.com' \
- && spack gpg list
+RUN source ${SPACK_ROOT}/share/spack/setup-env.sh \
+ && spack compiler find --scope site \
+ && spack compiler list
 
-# Install packages as x86_64 in /cvmfs (fixed rpaths, allows buildcache create -a)
-RUN sed -i 's|install_tree: .*|install_tree: /cvmfs/eic.opensciencegrid.org/packages|' /spack/etc/spack/defaults/config.yaml
-RUN sed -i 's|install_path_scheme: .*|install_path_scheme: "\${PACKAGE}/\${VERSION}/\${ARCHITECTURE}-\${COMPILERNAME}-\${COMPILERVER}-\${HASH}"|' /spack/etc/spack/defaults/config.yaml
-RUN sed -i 's|  all:|  all:\n    target: [x86_64]|' /spack/etc/spack/defaults/packages.yaml
+# Install configuration
+COPY config.yaml ${SPACK_ROOT}/etc/spack
 
 # Install EIC spack
-RUN git clone https://github.com/eic/eic-spack.git /spack/var/spack/repos/eic-spack
-RUN source /spack/share/spack/setup-env.sh \
- && spack repo add --scope defaults /spack/var/spack/repos/eic-spack
+RUN git clone --depth 1 https://github.com/eic/eic-spack.git ${SPACK_ROOT}/var/spack/repos/eic-spack
+RUN source ${SPACK_ROOT}/share/spack/setup-env.sh \
+ && spack repo add --scope site ${SPACK_ROOT}/var/spack/repos/eic-spack
 
-# Setup mirror
-RUN mkdir /spack/mirror
-RUN source /spack/share/spack/setup-env.sh && spack mirror add --scope defaults local file:///spack/mirror
+# Setup mirrors
+RUN source ${SPACK_ROOT}/share/spack/setup-env.sh \
+ && spack mirror add --scope site jlab-public http://spack.jlab.org/mirror
 
 # Tini
 ENV TINI_VERSION v0.19.0
@@ -59,4 +66,4 @@ RUN chmod +x /tini
 # Entrypoint
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
-ENTRYPOINT ["/tini", "--", "/entrypoint.sh"]
+ENTRYPOINT ["/tini", "-s", "--", "/entrypoint.sh"] 

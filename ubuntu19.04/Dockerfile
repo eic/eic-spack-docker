@@ -1,17 +1,29 @@
-# This contains the spack-builder docker container recipe for centos7.
+# This contains the spack-builder docker container recipe for ubuntu19.04.
 #
 # This container can be built (from the top level directory of this repository) with:
-#     docker build -t electronioncollider/spack-builder:centos7 . --file centos7/Dockerfile
+#     docker build -t electronioncollider/spack-builder:ubuntu19.04 . --file ubuntu19.04/Dockerfile
 # This container is built automatically based on the main branch of the repository,
-# and made available as docker://electronioncollider/spack-builder:centos7
+# and made available as docker://electronioncollider/spack-builder:ubuntu19.04
 #
 # After building the container locally, you can also test it with singularity as follows:
-#     singularity run docker-daemon://electronioncollider/spack-builder:centos7 /bin/bash
+#     singularity run docker-daemon://electronioncollider/spack-builder:ubuntu19.04 /bin/bash
 #
-FROM centos:7
+FROM ubuntu:19.04
 
 # Install build essentials
-RUN yum install -q -y file git make automake cmake gcc gcc-c++ gcc-gfortran unzip patch python3 bzip2 rsync which diffutils crontabs
+RUN apt-get update -q \
+ && apt-get install -q -y \
+        bzip2 \
+        curl \
+        build-essential \
+        gfortran \
+        git \
+        gnupg2 \
+        patch \
+        python-dev \
+        rsync \
+        unzip \
+ && apt-get clean -q -y
 
 # Install spack
 ENV SPACK_ROOT /cvmfs/eic.opensciencegrid.org/packages/spack/current

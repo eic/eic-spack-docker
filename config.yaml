@@ -1,0 +1,10 @@
+config:
+  install_tree: $spack/../..
+  install_path_scheme: "${PACKAGE}/${VERSION}/${ARCHITECTURE}-${COMPILERNAME}-${COMPILERVER}-${HASH}"
+
+  source_cache: $spack/var/spack/cache
+
+  module_roots:
+    tcl:    $spack/share/spack/modules
+    lmod:   $spack/share/spack/lmod
+

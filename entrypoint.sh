@@ -1,4 +1,4 @@
 #!/bin/bash
 
-source /spack/share/spack/setup-env.sh
+source /cvmfs/eic.opensciencegrid.org/packages/setup-env.sh
 exec "$@"
