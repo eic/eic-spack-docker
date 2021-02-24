@@ -10,7 +10,7 @@ jobs:
   build_only:
     strategy:
       matrix:
-        os: [centos7,centos8,ubuntu18.04,ubuntu19.10,ubuntu20.04,ubuntu20.10]
+        os: [centos7,centos8,ubuntu18.04,ubuntu20.04,ubuntu20.10]
     runs-on: ubuntu-latest
     steps:
     -
