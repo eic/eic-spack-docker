@@ -10,7 +10,7 @@ RUN apt-get update -q \
         git \
         gnupg2 \
         patch \
-        python-dev \
+        python3-dev \
         rsync \
         unzip \
  && apt-get clean -q -y
