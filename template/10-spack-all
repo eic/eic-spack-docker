@@ -27,10 +27,6 @@ RUN git clone --depth 1 https://github.com/eic/eic-spack.git ${SPACK_ROOT}/var/s
 RUN source ${SPACK_ROOT}/share/spack/setup-env.sh \
  && spack repo add --scope site ${SPACK_ROOT}/var/spack/repos/eic-spack
 
-# Setup mirrors
-RUN source ${SPACK_ROOT}/share/spack/setup-env.sh \
- && spack mirror add --scope site jlab-public http://spack.jlab.org/mirror
-
 # Entrypoint
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
