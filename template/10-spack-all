@@ -31,12 +31,7 @@ RUN source ${SPACK_ROOT}/share/spack/setup-env.sh \
 RUN source ${SPACK_ROOT}/share/spack/setup-env.sh \
  && spack mirror add --scope site jlab-public http://spack.jlab.org/mirror
 
-# Tini
-ENV TINI_VERSION v0.19.0
-ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
-RUN chmod +x /tini
-
 # Entrypoint
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
-ENTRYPOINT ["/tini", "-s", "--", "/entrypoint.sh"] 
+ENTRYPOINT ["/entrypoint.sh"] 
