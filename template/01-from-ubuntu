@@ -3,9 +3,10 @@ FROM ubuntu:%tag%
 # Install build essentials
 RUN apt-get update -q \
  && apt-get install -q -y \
+        build-essential \
         bzip2 \
         curl \
-        build-essential \
+        file \
         gfortran \
         git \
         gnupg2 \
