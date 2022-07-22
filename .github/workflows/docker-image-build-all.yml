@@ -17,6 +17,9 @@ jobs:
       name: Checkout
       uses: actions/checkout@v2
     -
+      name: Create Dockerfile
+      run: ./create-one-dockerfile.sh ${{ matrix.os }}
+    -
       name: Set up QEMU
       uses: docker/setup-qemu-action@v1
     -
