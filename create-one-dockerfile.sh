@@ -2,7 +2,7 @@
 
 dir=`dirname $0`
 
-base=${1:-centos:7}
+base=${1:-ubuntu:22.04}
 
 os=${base%%:*}
 tag=${base##*:}
