@@ -8,7 +8,7 @@ jobs:
   push_to_registry:
     strategy:
       matrix:
-        os: [centos7,centos8,ubuntu18.04,ubuntu20.04,ubuntu20.10]
+        os: [ubuntu18.04, ubuntu20.04, ubuntu22.04]
     runs-on: ubuntu-latest
     steps:
     -
